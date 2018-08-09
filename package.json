@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/danillouz/clean-terminal-webpack-plugin#readme",
   "peerDependencies": {
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0 || ^4.0.0"
   }
 }
