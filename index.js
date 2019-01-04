@@ -2,8 +2,9 @@
 
 class CleanTerminalPlugin {
   constructor(options = {}) {
-    this.message = options.message;
-    this.onlyInWatchMode = options.onlyInWatchMode;
+    const {message, onlyInWatchMode = true} = options;
+    this.message = message;
+    this.onlyInWatchMode = onlyInWatchMode;
   }
 
   apply(compiler) {
