@@ -27,10 +27,10 @@ module.exports = {
 # API
 The plugin accepts an `options` Object:
 
-| key             | type    | required | description                                        |
-| ---             | ---     | ---      | ---                                                |
-| message         | String  | false    | Message to be printend.                            |
-| onlyInWatchMode | Boolean | false    | only clear the screen if webpack is in watch mode. |
+| key             | type    | required | defaults    | description                                       |
+| ---             | ---     | ---      | ---         | ---                                               |
+| message         | String  | no       | `undefined` | Message to be printed                             |
+| onlyInWatchMode | Boolean | no       | `true`      | Only clear the screen if webpack is in watch mode |
 
 ## Example
 ```js
@@ -45,7 +45,7 @@ module.exports = {
   plugins: [
     new CleanTerminalPlugin({
       message: `dev server running on http://${HOST}:${PORT}`,
-      onlyInWatchMode: true
+      onlyInWatchMode: false
     })
   ]
 };
