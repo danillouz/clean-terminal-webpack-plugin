@@ -1,8 +1,10 @@
 # Clean Terminal Webpack Plugin
+
 Cleans your terminal output during development to only show the latest build
 information.
 
 # Install
+
 Via npm:
 
 ```
@@ -10,6 +12,7 @@ npm i -D clean-terminal-webpack-plugin
 ```
 
 # Usage
+
 Via webpack config file:
 
 ```js
@@ -18,21 +21,21 @@ Via webpack config file:
 const CleanTerminalPlugin = require('clean-terminal-webpack-plugin');
 
 module.exports = {
-  plugins: [
-    new CleanTerminalPlugin()
-  ]
+  plugins: [new CleanTerminalPlugin()]
 };
 ```
 
 # API
+
 The plugin accepts an `options` Object:
 
-| key             | type    | required | defaults    | description                                       |
-| ---             | ---     | ---      | ---         | ---                                               |
-| message         | String  | no       | `undefined` | Message to be printed                             |
-| onlyInWatchMode | Boolean | no       | `true`      | Only clear the screen if webpack is in watch mode |
+| Key               | Type    | Required | Default     | Description                                       |
+| ----------------- | ------- | -------- | ----------- | ------------------------------------------------- |
+| `message`         | String  | no       | `undefined` | Message to be printed                             |
+| `onlyInWatchMode` | Boolean | no       | `true`      | Only clear the screen if webpack is in watch mode |
 
 ## Example
+
 ```js
 // webpack.config.js
 
@@ -49,4 +52,18 @@ module.exports = {
     })
   ]
 };
+```
+
+# Development
+
+Lint source code with:
+
+```
+npm run lint
+```
+
+Lint and format (prettier) source code with:
+
+```
+npm run lint:format
 ```
