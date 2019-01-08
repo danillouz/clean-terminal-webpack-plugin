@@ -22,7 +22,7 @@ class CleanTerminalPlugin {
   }
 
   shouldClearConsole(compiler) {
-    if (this.onlyInWatchMode) return compile.watchMode;
+    if (this.onlyInWatchMode) return compiler.watchMode;
     else
       return (
         process.env.NODE_ENV !== 'production' &&
