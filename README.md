@@ -67,3 +67,7 @@ Lint and format (prettier) source code with:
 ```
 npm run lint:format
 ```
+
+# Contributing
+
+Please read the [Contributing Guidelines](CONTRIBUTING.md) first.
