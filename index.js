@@ -12,7 +12,7 @@ class CleanTerminalPlugin {
     // Backwards compatible version of compiler.hooks
     if (!compiler.hooks) {
       compiler.plugin('emit', (_, done) => {
-        if (this.shouldClearConsole()) {
+        if (this.shouldClearConsole(compiler)) {
           this.clearConsole();
         }
 
