@@ -6,38 +6,41 @@ class CleanTerminalPlugin {
 
     this.message = message;
     this.onlyInWatchMode = onlyInWatchMode;
+    this.doClearConsole = false;
   }
 
   apply(compiler) {
-    // Backwards compatible version of compiler.hooks
-    if (!compiler.hooks) {
-      compiler.plugin('emit', (_, done) => {
-        if (this.shouldClearConsole(compiler)) {
-          this.clearConsole();
-        }
-
-        done();
-      });
-
-      return;
+    // Depending on the API available, we either use compiler hooks
+    // or compiler events (compiler events are supported for backwards compatibility)
+    if (compiler.hooks) {
+      this.useCompilerHooks(compiler);
+    } else {
+      this.useCompilerEvents(compiler);
     }
-
-    compiler.hooks.afterCompile.tap('CleanTerminalPlugin', () => {
-      if (this.shouldClearConsole(compiler)) {
-        this.clearConsole();
-      }
-    });
   }
 
   shouldClearConsole(compiler) {
     if (this.onlyInWatchMode) {
-      return compiler.watchMode;
+      return !!compiler.watchMode;
     }
 
-    return (
-      process.env.NODE_ENV !== 'production' &&
-      process.env.options.mode !== 'production'
-    );
+    const isNodeEnvProduction = process.env.NODE_ENV == 'production';
+    const isOptionsModeProduction = process.env.mode && process.env.options.mode == 'production';
+
+    return !isNodeEnvProduction && !isOptionsModeProduction;
+  }
+
+  useCompilerHooks(compiler) {
+    compiler.hooks.afterCompile.tap('CleanTerminalPlugin', () => {
+      if (this.shouldClearConsole(compiler)) this.clearConsole();
+    });
+  }
+
+  useCompilerEvents(compiler) {
+    compiler.plugin('emit', (_, done) => {
+      if (this.shouldClearConsole(compiler)) this.clearConsole();
+      done();
+    });
   }
 
   clearConsole() {
