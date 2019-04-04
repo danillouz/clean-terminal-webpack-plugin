@@ -26,8 +26,9 @@ class CleanTerminalPlugin {
     }
 
     const isNodeEnvProduction = process.env.NODE_ENV === 'production';
-    const isOptionsModeProduction =
-      compiler.options && compiler.options.mode === 'production';
+    const isOptionsModeProduction = Boolean(
+      compiler.options && compiler.options.mode === 'production'
+    );
 
     return !isNodeEnvProduction && !isOptionsModeProduction;
   }
