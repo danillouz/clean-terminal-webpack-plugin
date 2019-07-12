@@ -1,6 +1,6 @@
 {
   "name": "clean-terminal-webpack-plugin",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Cleans your terminal output during development to only show the latest build information.",
   "main": "index.js",
   "files": [
