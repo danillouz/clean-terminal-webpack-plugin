@@ -2,10 +2,12 @@
 
 class CleanTerminalPlugin {
   constructor(options = {}) {
-    const { message, onlyInWatchMode = true } = options;
+    const { message, onlyInWatchMode = true, skipFirstRun = false } = options;
 
     this.message = message;
     this.onlyInWatchMode = onlyInWatchMode;
+    this.skipFirstRun = skipFirstRun;
+    this.firstRun = true;
   }
 
   apply(compiler) {
@@ -21,6 +23,14 @@ class CleanTerminalPlugin {
   }
 
   shouldClearConsole(compiler) {
+    if (this.firstRun) {
+      this.firstRun = false;
+
+      if (this.skipFirstRun) {
+        return false;
+      }
+    }
+
     if (this.onlyInWatchMode) {
       return Boolean(compiler.watchMode);
     }
