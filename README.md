@@ -34,6 +34,7 @@ The plugin accepts an `options` Object:
 | `message`         | String  | no       | `undefined` | Message to be printed                             |
 | `onlyInWatchMode` | Boolean | no       | `true`      | Only clear the screen if webpack is in watch mode |
 | `skipFirstRun`    | Boolean | no       | `false`     | Don't clear the screen on first webpack run       |
+| `beforeCompile`   | Boolean | no       | `false`     | Clear screen before compiling instead of after    |
 
 ## Example
 
