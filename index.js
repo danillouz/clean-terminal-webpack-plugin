@@ -2,11 +2,12 @@
 
 class CleanTerminalPlugin {
   constructor(options = {}) {
-    const { message, onlyInWatchMode = true, skipFirstRun = false } = options;
+    const { message, onlyInWatchMode = true, skipFirstRun = false, beforeCompile = false } = options;
 
     this.message = message;
     this.onlyInWatchMode = onlyInWatchMode;
     this.skipFirstRun = skipFirstRun;
+    this.beforeCompile = beforeCompile;
     this.firstRun = true;
   }
 
@@ -16,7 +17,7 @@ class CleanTerminalPlugin {
      * or compiler events (compiler events are supported for backwards compatibility)
      */
     if (compiler.hooks) {
-      this.useCompilerHooks(compiler);
+      this.useCompilerHooks(compiler, this.beforeCompile);
     } else {
       this.useCompilerEvents(compiler);
     }
@@ -43,8 +44,12 @@ class CleanTerminalPlugin {
     return !isNodeEnvProduction && !isOptionsModeProduction;
   }
 
-  useCompilerHooks(compiler) {
-    compiler.hooks.afterCompile.tap('CleanTerminalPlugin', () => {
+  useCompilerHooks(compiler, beforeCompile) {
+    let hook = compiler.hooks.afterCompile;
+    if (beforeCompile) {
+      hook = compiler.hooks.beforeCompile;
+    }
+    hook.tap('CleanTerminalPlugin', () => {
       if (this.shouldClearConsole(compiler)) {
         this.clearConsole();
       }
