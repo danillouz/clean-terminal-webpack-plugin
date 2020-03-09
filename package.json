@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/danillouz/clean-terminal-webpack-plugin#readme",
   "peerDependencies": {
-    "webpack": "^3.0.0 || ^4.0.0"
+    "webpack": "^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
