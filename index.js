@@ -12,15 +12,15 @@ class CleanTerminalPlugin {
   }
 
   apply(compiler) {
-    /*
-     * Depending on the API available, we either use compiler hooks
-     * or compiler events (compiler events are supported for backwards compatibility)
-     */
-    if (compiler.hooks) {
-      this.useCompilerHooks(compiler, this.beforeCompile);
-    } else {
-      this.useCompilerEvents(compiler);
+    let hook = compiler.hooks.afterCompile;
+    if (this.beforeCompile) {
+      hook = compiler.hooks.beforeCompile;
     }
+    hook.tap('CleanTerminalPlugin', () => {
+      if (this.shouldClearConsole(compiler)) {
+        this.clearConsole();
+      }
+    });
   }
 
   shouldClearConsole(compiler) {
@@ -42,27 +42,6 @@ class CleanTerminalPlugin {
     );
 
     return !isNodeEnvProduction && !isOptionsModeProduction;
-  }
-
-  useCompilerHooks(compiler, beforeCompile) {
-    let hook = compiler.hooks.afterCompile;
-    if (beforeCompile) {
-      hook = compiler.hooks.beforeCompile;
-    }
-    hook.tap('CleanTerminalPlugin', () => {
-      if (this.shouldClearConsole(compiler)) {
-        this.clearConsole();
-      }
-    });
-  }
-
-  useCompilerEvents(compiler) {
-    compiler.plugin('emit', (_, done) => {
-      if (this.shouldClearConsole(compiler)) {
-        this.clearConsole();
-      }
-      done();
-    });
   }
 
   clearConsole() {
