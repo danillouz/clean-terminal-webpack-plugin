@@ -21,15 +21,14 @@ class CleanTerminalPlugin {
         this.clearConsole();
       }
     });
+    compiler.hooks.done.tap('CleanTerminalPlugin', () => {
+      if (this.firstRun) this.firstRun = false;
+    });
   }
 
   shouldClearConsole(compiler) {
-    if (this.firstRun) {
-      this.firstRun = false;
-
-      if (this.skipFirstRun) {
-        return false;
-      }
+    if (this.firstRun && this.skipFirstRun) {
+      return false;
     }
 
     if (this.onlyInWatchMode) {
